@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameTour - Tournament Management Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-flex">
+                <div class="logo">
+                    <i class="fas fa-trophy"></i>
+                    <span>GameTour</span>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="active">Home</a>
+                    <a href="pages/tournaments.html">Tournaments</a>
+                    <a href="pages/live-scores.html">Live Scores</a>
+                    <a href="#" id="dashboardLink">Dashboard</a>
+                    <a href="#" id="authBtn" class="btn-primary-small">Login / Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1>Play, Manage & Enjoy <span class="gradient-text">Sports Tournaments</span></h1>
+                    <p>GameTour is a platform where players, organizers, and fans come together to play, manage, and enjoy sports tournaments. Make tournament management easy and digital.</p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary" onclick="window.location.href='pages/create-tournament.html'">
+                            <i class="fas fa-plus-circle"></i> Create Tournament
+                        </button>
+                        <button class="btn-secondary" onclick="window.location.href='pages/tournaments.html'">
+                            <i class="fas fa-search"></i> Browse Tournaments
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-stats">
+                        <div class="stat-badge">
+                            <i class="fas fa-trophy"></i>
+                            <span>50+ Tournaments</span>
+                        </div>
+                        <div class="stat-badge">
+                            <i class="fas fa-users"></i>
+                            <span>1000+ Players</span>
+                        </div>
+                        <div class="stat-badge">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Live Scores</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">What GameTour Offers</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-trophy"></i>
+                    <h3>Tournament Management</h3>
+                    <p>Create tournaments, set rules, entry fees, prizes, and manage teams & schedule easily.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Team & Player System</h3>
+                    <p>Add players with ID, photo, track stats, and build team profiles.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Live Score System</h3>
+                    <p>Real-time score updates with match status (Live / Upcoming / Completed).</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-search"></i>
+                    <h3>Search & Filters</h3>
+                    <p>Filter by sport, location, status to find tournaments easily.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Roles Section -->
+    <section class="roles">
+        <div class="container">
+            <h2 class="section-title">Who Can Use GameTour?</h2>
+            <div class="roles-grid">
+                <div class="role-card organizer">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Organizer</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Create tournaments</li>
+                        <li><i class="fas fa-check-circle"></i> Manage teams & matches</li>
+                        <li><i class="fas fa-check-circle"></i> Update scores</li>
+                    </ul>
+                </div>
+                <div class="role-card player">
+                    <i class="fas fa-user-athlete"></i>
+                    <h3>Player</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Register in tournaments</li>
+                        <li><i class="fas fa-check-circle"></i> Join teams</li>
+                        <li><i class="fas fa-check-circle"></i> Track performance</li>
+                    </ul>
+                </div>
+                <div class="role-card fan">
+                    <i class="fas fa-eye"></i>
+                    <h3>Fan / Viewer</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Watch live scores</li>
+                        <li><i class="fas fa-check-circle"></i> Explore tournaments</li>
+                        <li><i class="fas fa-check-circle"></i> Follow players & teams</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Tournaments Preview -->
+    <section class="live-tournaments">
+        <div class="container">
+            <h2 class="section-title">Live & Upcoming Tournaments</h2>
+            <div id="tournamentPreview" class="tournament-grid">
+                <!-- Dynamic content loaded via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Your Tournament Journey?</h2>
+                <p>Join thousands of players and organizers on GameTour today!</p>
+                <button class="btn-primary" onclick="window.location.href='pages/create-tournament.html'">
+                    Get Started Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>GameTour</h3>
+                    <p>Making tournament management easy and digital since 2024</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="pages/tournaments.html">Tournaments</a>
+                    <a href="pages/live-scores.html">Live Scores</a>
+                    <a href="#">About Us</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <i class="fab fa-facebook"></i>
+                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 GameTour - Where Sports Community Meets Technology</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

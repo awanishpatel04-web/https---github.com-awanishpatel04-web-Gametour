@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - GameTour</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-flex">
+                <div class="logo">
+                    <i class="fas fa-trophy"></i>
+                    <span>GameTour</span>
+                </div>
+                <div class="nav-links">
+                    <a href="../index.html">Home</a>
+                    <a href="tournaments.html">Tournaments</a>
+                    <a href="live-scores.html">Live Scores</a>
+                    <a href="dashboard.html">Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="profile-container" id="profileContainer">
+            <!-- Dynamic content -->
+        </div>
+    </div>
+
+    <script src="../js/data.js"></script>
+    <script>
+        function loadProfile() {
+            const user = localStorage.getItem('gametour_user');
+            if (!user) {
+                window.location.href = '../index.html';
+                return;
+            }
+            
+            const userData = JSON.parse(user);
+            const myTournaments = getUserTournaments();
+            
+            const container = document.getElementById('profileContainer');
+            container.innerHTML = `
+                <div class="profile-header">
+                    <div class="profile-avatar-large">${userData.avatar || userData.name.charAt(0)}</div>
+                    <h1>${userData.name}</h1>
+                    <p class="user-role"><i class="fas fa-badge"></i> ${userData.role.toUpperCase()}</p>
+                </div>
+                
+                <div class="profile-details-card">
+                    <h3><i class="fas fa-info-circle"></i> Personal Information</h3>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <label>Full Name</label>
+                            <p>${userData.name}</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Email Address</label>
+                            <p>${userData.email}</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>User Role</label>
+                            <p>${userData.role}</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Member Since</label>
+                            <p>${new Date(userData.createdAt).toLocaleDateString()}</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Tournaments Played</label>
+                            <p>${myTournaments.length}</p>
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="editProfileInfo()">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
+                </div>
+                
+                <div class="stats-summary">
+                    <div class="stat-box">
+                        <i class="fas fa-trophy"></i>
+                        <h3>${myTournaments.filter(t => t.status === 'completed').length}</h3>
+                        <p>Tournaments Completed</p>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>${myTournaments.filter(t => t.status === 'live').length}</h3>
+                        <p>Active Tournaments</p>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-calendar"></i>
+                        <h3>${myTournaments.filter(t => t.status === 'upcoming').length}</h3>
+                        <p>Upcoming Tournaments</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function editProfileInfo() {
+            const user = JSON.parse(localStorage.getItem('gametour_user'));
+            const newName = prompt('Enter your name:', user.name);
+            if (newName && newName.trim()) {
+                user.name = newName.trim();
+                user.avatar = newName.trim().charAt(0).toUpperCase();
+                localStorage.setItem('gametour_user', JSON.stringify(user));
+                loadProfile();
+            }
+        }
+        
+        loadProfile();
+    </script>
+    
+    <style>
+        .profile-container {
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+        .profile-header {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 16px;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        .profile-avatar-large {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #3b82f6;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .user-role {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            margin-top: 0.5rem;
+        }
+        .profile-details-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .detail-item label {
+            font-weight: 600;
+            color: #64748b;
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.85rem;
+        }
+        .detail-item p {
+            font-size: 1.1rem;
+            color: #1e293b;
+            font-weight: 500;
+        }
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .stat-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .stat-box i {
+            font-size: 2rem;
+            color: #3b82f6;
+        }
+        .stat-box h3 {
+            font-size: 2rem;
+            margin: 0.5rem 0;
+        }
+        @media (max-width: 768px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>

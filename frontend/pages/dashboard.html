@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - GameTour</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-flex">
+                <div class="logo">
+                    <i class="fas fa-trophy"></i>
+                    <span>GameTour</span>
+                </div>
+                <div class="nav-links">
+                    <a href="../index.html">Home</a>
+                    <a href="tournaments.html">Tournaments</a>
+                    <a href="live-scores.html">Live Scores</a>
+                    <a href="#" id="logoutBtn">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="dashboard-sidebar">
+            <h3><i class="fas fa-chart-line"></i> My Dashboard</h3>
+            <ul>
+                <li data-tab="overview" class="active">
+                    <i class="fas fa-home"></i> Overview
+                </li>
+                <li data-tab="tournaments">
+                    <i class="fas fa-trophy"></i> My Tournaments
+                </li>
+                <li data-tab="matches">
+                    <i class="fas fa-chart-line"></i> Live Matches
+                </li>
+                <li data-tab="profile">
+                    <i class="fas fa-user"></i> Profile
+                </li>
+            </ul>
+        </aside>
+        <main class="dashboard-main" id="dashboardContent">
+            <!-- Dynamic content loaded via JavaScript -->
+            <div style="text-align: center; padding: 3rem;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
+                <p>Loading dashboard...</p>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .empty-state i {
+            font-size: 3rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+        .profile-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 1rem;
+        }
+        .profile-info {
+            text-align: left;
+            margin: 1.5rem 0;
+        }
+        .profile-info p {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .match-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .match-card.live {
+            border-left: 4px solid #ef4444;
+        }
+        .match-header-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .tournament-badge {
+            background: #f1f5f9;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        .live-badge {
+            background: #ef4444;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            animation: pulse 1.5s infinite;
+        }
+        .match-teams {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 1rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        .score-large {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        .vs {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #94a3b8;
+        }
+        .match-info {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+        }
+        .btn-secondary-small {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        @media (max-width: 768px) {
+            .match-teams {
+                gap: 0.5rem;
+            }
+            .score-large {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

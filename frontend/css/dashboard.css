@@ -1,0 +1,148 @@
+.dashboard-container {
+    display: flex;
+    min-height: calc(100vh - 70px);
+    background: #f1f5f9;
+}
+
+.dashboard-sidebar {
+    width: 280px;
+    background: white;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+    padding: 2rem 1rem;
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+}
+
+.dashboard-sidebar h3 {
+    margin-bottom: 1.5rem;
+    color: #1e293b;
+    font-size: 1.3rem;
+}
+
+.dashboard-sidebar ul {
+    list-style: none;
+}
+
+.dashboard-sidebar li {
+    padding: 0.75rem 1rem;
+    margin: 0.25rem 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.dashboard-sidebar li i {
+    width: 20px;
+    color: #64748b;
+}
+
+.dashboard-sidebar li:hover, .dashboard-sidebar li.active {
+    background: #3b82f6;
+    color: white;
+}
+
+.dashboard-sidebar li:hover i, .dashboard-sidebar li.active i {
+    color: white;
+}
+
+.dashboard-main {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.stat-card i {
+    font-size: 2rem;
+    color: #3b82f6;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card h3 {
+    font-size: 2rem;
+    color: #1e293b;
+    margin-bottom: 0.25rem;
+}
+
+.stat-card p {
+    color: #64748b;
+}
+
+.recent-activity {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+}
+
+.recent-activity h3 {
+    margin-bottom: 1rem;
+    color: #1e293b;
+}
+
+.activity-item {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.activity-item i {
+    color: #3b82f6;
+    font-size: 1.2rem;
+}
+
+.activity-item .activity-details {
+    flex: 1;
+}
+
+.activity-item .activity-title {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.activity-item .activity-time {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    
+    .dashboard-sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+    }
+    
+    .dashboard-main {
+        padding: 1rem;
+    }
+}

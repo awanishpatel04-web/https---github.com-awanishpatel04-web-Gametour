@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Tournaments - GameTour</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-flex">
+                <div class="logo">
+                    <i class="fas fa-trophy"></i>
+                    <span>GameTour</span>
+                </div>
+                <div class="nav-links">
+                    <a href="../index.html">Home</a>
+                    <a href="tournaments.html" class="active">Tournaments</a>
+                    <a href="live-scores.html">Live Scores</a>
+                    <a href="dashboard.html">Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="filters-bar" style="margin: 2rem 0;">
+            <input type="text" id="searchInput" placeholder="Search tournaments by name..." style="padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; flex: 1;">
+            <select id="sportFilter" style="padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                <option value="">All Sports</option>
+                <option>Cricket</option>
+                <option>Football</option>
+                <option>Kabaddi</option>
+                <option>Basketball</option>
+            </select>
+            <select id="statusFilter" style="padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                <option value="">All Status</option>
+                <option value="live">Live</option>
+                <option value="upcoming">Upcoming</option>
+                <option value="completed">Completed</option>
+            </select>
+        </div>
+        <div id="tournamentsList" class="tournament-grid"></div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 GameTour - Find and Join Tournaments</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        function renderTournaments(search = '', sport = '', status = '') {
+            let tournaments = getTournaments();
+            
+            if (search) {
+                tournaments = tournaments.filter(t => t.name.toLowerCase().includes(search.toLowerCase()));
+            }
+            if (sport) {
+                tournaments = tournaments.filter(t => t.sport === sport);
+            }
+            if (status) {
+                tournaments = tournaments.filter(t => t.status === status);
+            }
+            
+            const container = document.getElementById('tournamentsList');
+            if (tournaments.length === 0) {
+                container.innerHTML = '<p style="text-align: center; padding: 3rem;">No tournaments found</p>';
+                return;
+            }
+            
+            container.innerHTML = tournaments.map(t => `
+                <div class="tournament-card" onclick="viewTournament(${t.id})">
+                    <div class="tournament-header">
+                        <h3>${t.name}</h3>
+                    </div>
+                    <div class="tournament-body">
+                        <span class="tournament-status status-${t.status}">${t.status}</span>
+                        <p><i class="fas fa-tag"></i> ${t.sport}</p>
+                        <p><i class="fas fa-map-marker-alt"></i> ${t.location}</p>
+                        <p><i class="fas fa-calendar"></i> ${t.startDate} to ${t.endDate}</p>
+                        <p><i class="fas fa-users"></i> ${t.teams} Teams</p>
+                        <p><i class="fas fa-trophy"></i> Prize: ${t.prize}</p>
+                        <button class="btn-primary-small" onclick="event.stopPropagation(); registerForTournamentPrompt(${t.id})">
+                            Register Now
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        window.viewTournament = (id) => {
+            window.location.href = `tournament-details.html?id=${id}`;
+        };
+        
+        function registerForTournamentPrompt(tournamentId) {
+            const user = localStorage.getItem('gametour_user');
+            if (!user) {
+                showLoginModal();
+                return;
+            }
+            const success = registerForTournament(tournamentId);
+            alert(success ? 'Successfully registered!' : 'Already registered!');
+            if (success) saveUserData();
+        }
+        
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderTournaments(e.target.value, document.getElementById('sportFilter').value, document.getElementById('statusFilter').value);
+        });
+        document.getElementById('sportFilter').addEventListener('change', (e) => {
+            renderTournaments(document.getElementById('searchInput').value, e.target.value, document.getElementById('statusFilter').value);
+        });
+        document.getElementById('statusFilter').addEventListener('change', (e) => {
+            renderTournaments(document.getElementById('searchInput').value, document.getElementById('sportFilter').value, e.target.value);
+        });
+        
+        renderTournaments();
+        checkAuthStatus();
+    </script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Tournament - GameTour</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/tournament.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-flex">
+                <div class="logo">
+                    <i class="fas fa-trophy"></i>
+                    <span>GameTour</span>
+                </div>
+                <div class="nav-links">
+                    <a href="../index.html">Home</a>
+                    <a href="tournaments.html">Tournaments</a>
+                    <a href="live-scores.html">Live Scores</a>
+                    <a href="dashboard.html">Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-container">
+            <h2><i class="fas fa-plus-circle"></i> Create New Tournament</h2>
+            <p class="form-subtitle">Fill in the details to create your tournament</p>
+            
+            <form id="createTournamentForm">
+                <div class="form-group">
+                    <label><i class="fas fa-trophy"></i> Tournament Name *</label>
+                    <input type="text" id="tournamentName" required placeholder="e.g., Summer Championship 2024">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Sport *</label>
+                    <select id="sport" required>
+                        <option value="">Select Sport</option>
+                        <option>Cricket</option>
+                        <option>Football</option>
+                        <option>Kabaddi</option>
+                        <option>Basketball</option>
+                        <option>Badminton</option>
+                        <option>Tennis</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> Location *</label>
+                        <input type="text" id="location" required placeholder="City, Venue">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-users"></i> Max Teams *</label>
+                        <input type="number" id="teams" required placeholder="Number of teams">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar"></i> Start Date *</label>
+                        <input type="date" id="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar"></i> End Date *</label>
+                        <input type="date" id="endDate" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-money-bill"></i> Entry Fee (₹)</label>
+                        <input type="number" id="entryFee" value="0" placeholder="0 for free">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-trophy"></i> Prize Pool *</label>
+                        <input type="text" id="prize" required placeholder="e.g., ₹50,000">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-chart-line"></i> Tournament Format *</label>
+                    <select id="format" required>
+                        <option value="">Select Format</option>
+                        <option>Knockout</option>
+                        <option>League</option>
+                        <option>Group Stage + Knockout</option>
+                        <option>Round Robin</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-info-circle"></i> Tournament Description</label>
+                    <textarea id="description" rows="4" placeholder="Describe your tournament, rules, special highlights..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-check-circle"></i> Create Tournament
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('createTournamentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const user = localStorage.getItem('gametour_user');
+            if (!user) {
+                alert('Please login first to create a tournament!');
+                window.location.href = '../index.html';
+                return;
+            }
+            
+            const tournamentData = {
+                id: Date.now(),
+                name: document.getElementById('tournamentName').value,
+                sport: document.getElementById('sport').value,
+                location: document.getElementById('location').value,
+                teams: parseInt(document.getElementById('teams').value),
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                entryFee: parseInt(document.getElementById('entryFee').value),
+                prize: document.getElementById('prize').value,
+                format: document.getElementById('format').value,
+                description: document.getElementById('description').value,
+                status: 'upcoming',
+                organizer: JSON.parse(user).name
+            };
+            
+            // Save to localStorage (simulating database)
+            let tournaments = JSON.parse(localStorage.getItem('gametour_tournaments') || '[]');
+            tournaments.push(tournamentData);
+            localStorage.setItem('gametour_tournaments', JSON.stringify(tournaments));
+            
+            alert('Tournament created successfully!');
+            window.location.href = 'dashboard.html';
+        });
+        
+        // Set min date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('startDate').min = today;
+        document.getElementById('endDate').min = today;
+    </script>
+    
+    <style>
+        .form-subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        textarea {
+            resize: vertical;
+            font-family: inherit;
+        }
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>
